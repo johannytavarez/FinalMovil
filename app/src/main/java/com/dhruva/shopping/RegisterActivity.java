@@ -49,20 +49,20 @@ public class RegisterActivity extends AppCompatActivity {
         String password = InputPassword.getText().toString();
         if (TextUtils.isEmpty(name))
         {
-            Toast.makeText(this, "Please write your name...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe tu nombre...", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(phone))
         {
-            Toast.makeText(this, "Please write your phone number...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe tu numero de telefono...", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe tu contraseña...", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            loadingBar.setTitle("Create Account");
-            loadingBar.setMessage("Please wait, while we are checking the credentials.");
+            loadingBar.setTitle("Crear cuenta");
+            loadingBar.setMessage("Espera mientras revisamos tus credenciales.");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (task.isSuccessful())
                             {
-                                Toast.makeText(RegisterActivity.this, "Congratulations, your account has been created.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Tu cuenta a sido creada.", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Intent intent = new Intent(RegisterActivity.this, com.dhruva.shopping.LoginActivity.class);
                                 startActivity(intent);
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else
                             {
                                 loadingBar.dismiss();
-                                Toast.makeText(RegisterActivity.this, "Network Error: Please try again after some time...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Hubo un problema al crear tu cuenta de usuario, vuelve a intentarlo...", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -105,9 +105,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(RegisterActivity.this, "This " + phone + " already exists.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Este " + phone + " ya existe.", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Please try again using another phone number.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Vuelve a intentarlo mas tarde.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, com.dhruva.shopping.MainActivity.class);
                     startActivity(intent);
                 }

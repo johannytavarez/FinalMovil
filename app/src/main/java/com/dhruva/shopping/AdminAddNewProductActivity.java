@@ -50,8 +50,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_new_product);
 
 
-        CategoryName = getIntent().getExtras().get("category").toString();
-        ProductImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
+        CategoryName = getIntent().getExtras().get("categoria").toString();
+        ProductImagesRef = FirebaseStorage.getInstance().getReference().child("Imagen del producto");
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
 
@@ -105,19 +105,19 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         Pname = InputProductName.getText().toString();
         if (ImageUri == null)
         {
-            Toast.makeText(this, "Product image is mandatory...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "La imagen es obligatoria...", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(Description))
         {
-            Toast.makeText(this, "Please write product description...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe la descripcion del producto...", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(Price))
         {
-            Toast.makeText(this, "Please write product Price...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe el precio del producto...", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(Pname))
         {
-            Toast.makeText(this, "Please write product name...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Escribe el nombre del producto...", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -125,10 +125,11 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         }
 
     }
+
     private void StoreProductInformation()
     {
-        loadingBar.setTitle("Add New Product");
-        loadingBar.setMessage("Dear Admin, please wait while we are adding the new product.");
+        loadingBar.setTitle("Agregar un nuevo producto");
+        loadingBar.setMessage("Espera mientras agregamos el producto");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
@@ -157,7 +158,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AdminAddNewProductActivity.this, "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminAddNewProductActivity.this, "Imagen del producto guardada con exito...", Toast.LENGTH_SHORT).show();
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -177,7 +178,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
                         {
                             downloadImageUrl = task.getResult().toString();
 
-                            Toast.makeText(AdminAddNewProductActivity.this, "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminAddNewProductActivity.this, "URL de imagen del producto obtenida con exito...", Toast.LENGTH_SHORT).show();
 
                             SaveProductInfoToDatabase();
                         }
@@ -189,6 +190,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     }
     private void SaveProductInfoToDatabase()
     {
+
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("pid", productRandomKey);
         productMap.put("date", saveCurrentDate);
@@ -199,8 +201,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         productMap.put("price", Price);
         productMap.put("pname", Pname);
 
-        ProductsRef.child(productRandomKey).updateChildren(productMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        ProductsRef.child(productRandomKey).updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
